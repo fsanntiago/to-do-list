@@ -5,17 +5,13 @@ import { Types } from 'mongoose'
 
 export async function createTask(req: Request, res: Response) {
   const { title, description } = req.body
-
-  const newTask = new TaskModel({
-    _id: new Types.ObjectId(),
-    title,
-    description,
-  })
-
-  const validationError = newTask.validateSync()
-  if (validationError) throw validationError
-
+  
   try {
+    const newTask = new TaskModel({
+      _id: new Types.ObjectId(),
+      title,
+      description,
+    })
     newTask.save()
 
     ResponseHandler.successResponse(
