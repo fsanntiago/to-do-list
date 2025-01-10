@@ -1,0 +1,42 @@
+<div class="pt-8 w-full">
+  <div class="container">
+    <div
+      class="flex justify-between items-center border-b border-b-muted pb-5 mb-8"
+    >
+      <h1 class="text-3xl font-bold text-foreground">to do list</h1>
+      <button
+        (click)="showAddTaskDialog()"
+        class="bg-primary text-primary-foreground px-4 py-2 rounded flex items-center justify-center gap-3"
+      >
+        <span class="pi pi-plus"></span>
+        Nova Tarefa
+      </button>
+    </div>
+    @if (taskService.loading()) {
+    <div class="flex justify-center">
+      <span class="pi pi-spinner animate-spin text-4xl"></span>
+    </div>
+    } @else { @if (taskService.tasks().length === 0) {
+    <div class="text-center py-8">
+      <p class="text-muted">Nenhuma tarefa encontrada</p>
+    </div>
+    } @else {
+    <div class="flex flex-col gap-4">
+      @for (task of taskService.tasks(); track task._id) {
+      <app-task-card
+        [task]="task"
+        (onDelete)="deleteTask($event)"
+        (onToggle)="toggleTask($event)"
+        (onEdit)="editTask($event)"
+      />
+      }
+    </div>
+    } } @if (showDialog) {
+    <app-add-task-dialog
+      [task]="selectedTask"
+      (onClose)="closeDialog()"
+      (onSave)="saveTask($event)"
+    />
+    }
+  </div>
+</div>
