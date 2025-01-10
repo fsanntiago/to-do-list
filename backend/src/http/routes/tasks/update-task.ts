@@ -4,27 +4,20 @@ import type { Request, Response } from 'express'
 
 export async function updateTask(req: Request, res: Response) {
   const { id } = req.params
-  const { title, description, completed, isActive } = req.body
 
   try {
     const updatedTask = await TaskModel.findByIdAndUpdate(
       id,
       {
-        title,
-        description,
-        completed,
-        isActive,
+        $set: req.body,
       },
-      { new: true },
+      { new: true, runValidators: true },
     )
 
     if (!updatedTask) {
       ResponseHandler.errorResponse(res, 'Task not found', null, 404)
       return
     }
-
-    const validationError = updatedTask.validateSync()
-    if (validationError) throw validationError
 
     ResponseHandler.successResponse(
       res,
