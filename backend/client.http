@@ -3,7 +3,8 @@ GET http://localhost:3333/api/tasks
 ######
 
 POST http://localhost:3333/api/tasks
-content-type: application/json
+Content-Type: application/json
+
 {
   "title": "string",
   "description": "string"
@@ -11,14 +12,18 @@ content-type: application/json
 
 ######
 
-DELETE http://localhost:3333/api/tasks/:id HTTP/1.1
+DELETE http://localhost:3333/api/tasks/:id 
 
 ######
 
-PUT http://localhost:3333/api/tasks/:id HTTP/1.1
+PUT http://localhost:3333/api/tasks/:id
+Content-Type: application/json
+
 {
   "title": "string",
   "description": "string",
   "completed": true,
   "isActive": true
 }
+
+######
